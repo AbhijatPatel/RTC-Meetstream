@@ -1,0 +1,380 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+:root {
+  --ink: #12141c;
+  --panel: #1a1d28;
+  --panel-raised: #232735;
+  --line: #2c3040;
+  --text: #eceef4;
+  --text-dim: #9297ab;
+  --signal: #e8a33d;
+  --signal-dim: #6b5227;
+  --relay: #3fb6a8;
+  --danger: #e0575a;
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  margin: 0;
+}
+
+code,
+.mono {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input {
+  font-family: inherit;
+}
+
+a {
+  color: var(--relay);
+}
+
+::selection {
+  background: var(--signal-dim);
+}
+
+/* focus visibility, kept even where components override outlines elsewhere */
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--relay);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- shared controls ---------- */
+
+.ctl-btn {
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.ctl-btn:hover {
+  border-color: var(--relay);
+}
+
+.ctl-btn--active {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: #1a1204;
+}
+
+.ctl-btn--off {
+  background: var(--panel);
+  color: var(--text-dim);
+}
+
+.ctl-btn--danger {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #2a0708;
+}
+
+/* ---------- auth screens ---------- */
+
+.auth-screen {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.auth-card h1 {
+  font-size: 26px;
+  letter-spacing: -0.01em;
+}
+
+.auth-sub {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin: 8px 0 24px;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.auth-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+}
+
+.auth-tab--active {
+  color: var(--text);
+  border-bottom-color: var(--signal);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-form input {
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 11px 12px;
+  font-size: 14px;
+}
+
+.auth-form input:focus {
+  border-color: var(--relay);
+  outline: none;
+}
+
+.auth-error {
+  color: var(--danger);
+  font-size: 13px;
+}
+
+/* ---------- room layout ---------- */
+
+.room-screen {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  height: 100%;
+}
+
+.room-main {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 16px;
+  min-width: 0;
+}
+
+.video-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  align-content: start;
+}
+
+.video-tile {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.video-tile video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-label {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  background: rgba(18, 20, 28, 0.7);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+}
+
+.room-code {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.controls-group {
+  display: flex;
+  gap: 8px;
+}
+
+/* ---------- side panel: chat + whiteboard ---------- */
+
+.room-side {
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.side-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--line);
+}
+
+.side-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  padding: 14px 0;
+  font-size: 13px;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+}
+
+.side-tab--active {
+  color: var(--text);
+  border-bottom-color: var(--relay);
+}
+
+.chat-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.chat-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-msg {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+}
+
+.chat-author {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.chat-text-input {
+  flex: 1;
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 10px 12px;
+  font-size: 14px;
+  min-width: 0;
+}
+
+.whiteboard-panel {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.whiteboard-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+
+.swatch--active {
+  border-color: var(--text);
+}
+
+.whiteboard-panel canvas {
+  width: 100%;
+  background: #f4f1e8;
+  border-radius: var(--radius);
+  touch-action: none;
+  cursor: crosshair;
+}
+
+@media (max-width: 860px) {
+  .room-screen {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+  .room-side {
+    border-left: none;
+    border-top: 1px solid var(--line);
+    max-height: 45vh;
+  }
+}
